@@ -58,6 +58,8 @@ public class GamePanel extends ListenerPanel {
         this.repaint();
     }
 
+
+
     @Override
     public void doMoveRight() {
         System.out.println("Click VK_RIGHT");
@@ -107,5 +109,33 @@ public class GamePanel extends ListenerPanel {
 
     public GridComponent getGridComponent(int row, int col) {
         return grids[row][col];
+    }
+
+
+    //Reset step count & reset hero/box
+    public void restartGame() {
+        for (int i = 0; i < grids.length; i++) {
+            for (int j = 0; j < grids[i].length; j++) {
+                if(grids[i][j].getHero() != null){
+                    grids[i][j].removeHeroFromGrid();
+                }
+                if (grids[i][j].getBox() != null) {
+                    grids[i][j].removeBoxFromGrid();
+                }
+
+                switch (model.getId(i, j) / 10) {
+                    case 1:
+                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10));
+                        break;
+                    case 2:
+                        this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j);
+                        grids[i][j].setHeroInGrid(hero);
+                        break;
+                }
+
+            }
+        }
+        this.steps = 0;
+        this.stepLabel.setText(String.format("Step: %d", this.steps));
     }
 }

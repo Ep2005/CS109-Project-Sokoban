@@ -20,8 +20,12 @@ public class GameController {
         view.setController(this);
     }
 
+
+    //Implemented restart
     public void restartGame() {
         System.out.println("Do restart game here");
+        this.model.resetMapMatrix();
+        this.view.restartGame();
     }
 
     public boolean doMove(int row, int col, Direction direction) {
