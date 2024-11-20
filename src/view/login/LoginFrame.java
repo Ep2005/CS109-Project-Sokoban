@@ -15,7 +15,7 @@ public class LoginFrame extends JFrame {
     private JTextField username;
     private JTextField password;
     private JButton submitBtn;
-    private JButton registerBtn;
+    private JButton regBtn;
     private LevelFrame levelFrame;
 
 
@@ -29,28 +29,28 @@ public class LoginFrame extends JFrame {
         password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        registerBtn = FrameUtil.createButton(this, "register", new Point(160, 140), 100, 40);
+        regBtn = FrameUtil.createButton(this, "register", new Point(160, 140), 100, 40);
 
         submitBtn.addActionListener(e -> {
-            File file=new File("C:\\cs\\Demo\\acc.txt");
+            File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
             ArrayList<String> users=new ArrayList<>();
             ArrayList<String> password=new ArrayList<>();
             Scanner f;
             try{
-                f = new Scanner(file);
+                f=new Scanner(file);
                 while (f.hasNext()){
                     users.add(f.next());
                     f.next();}
 
-            }
-            catch (IOException g){
+            }catch (IOException g){
                 System.out.println("error");
             }
 
             try{
-                BufferedWriter a = new BufferedWriter(new FileWriter("acc.txt",true));
-                String username1 = username.getText();
+                BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
+                String username1=username.getText();
                 if(!users.contains(username1)) {
+
 
                 }
                 else{
@@ -70,29 +70,31 @@ public class LoginFrame extends JFrame {
             //todo: check login info
 
         });
-        registerBtn.addActionListener(e -> {
-            File file=new File("C:\\cs\\Demo\\acc.txt");
-            ArrayList<String> users = new ArrayList<>();
+        regBtn.addActionListener(e -> {
+            File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
+            ArrayList<String> users=new ArrayList<>();
             Scanner f;
             try{
-                f = new Scanner(file);
+                f=new Scanner(file);
                 while (f.hasNext()){
                     users.add(f.next());
                     f.next();}
 
-            }
-            catch (IOException g){
+            }catch (IOException g){
                 System.out.println("error");
             }
 
             try{
-                BufferedWriter a = new BufferedWriter(new FileWriter("acc.txt",true));
-                String username1 = username.getText();
+                BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
+                String username1=username.getText();
                 if(!users.contains(username1)) {
+
+
                     String password1 = password.getText();
                     a.write(username1 + " " + password1 + "\n");
                 }
                 else{
+
                     JOptionPane.showMessageDialog(null, "Username is already in use");
                 }
                 a.flush();

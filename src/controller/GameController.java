@@ -38,8 +38,10 @@ public class GameController {
         int uCol = tCol + direction.getCol();
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
         int[][] map = model.getMatrix();
-        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
 
+
+        //Move hero is the tile in front is en empty tile or a target tile
+        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
             //update hero in MapMatrix
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 20;
@@ -57,7 +59,11 @@ public class GameController {
             }
 
             return true;
-        } else if (map[tRow][tCol] == 10 && (map[uRow][uCol] == 2 || map[uRow][uCol] == 0)) {
+        }
+
+        //if the tile in front contains a box and the tile in front of that
+        //tile is an empty or target tile, move box and hero
+        else if (map[tRow][tCol] == 10 && (map[uRow][uCol] == 2 || map[uRow][uCol] == 0)) {
             map[tRow][tCol] -= 10;
             map[uRow][uCol] += 10;
             Box x = view.getGridComponent(tRow, tCol).removeBoxFromGrid();
@@ -77,7 +83,12 @@ public class GameController {
                 System.out.println("you lose");
             }
             return true;
-        } else if (map[tRow][tCol] == 12 && (map[uRow][uCol] == 2 || map[uRow][uCol] == 0)) {
+        }
+
+        //if the tile in front is a box on the target and
+        //the tile in front of that tile is empty or target
+        //move box and hero
+        else if (map[tRow][tCol] == 12 && (map[uRow][uCol] == 2 || map[uRow][uCol] == 0)) {
             map[tRow][tCol] -= 10;
             map[uRow][uCol] += 10;
             Box x = view.getGridComponent(tRow, tCol).removeBoxFromGrid();
@@ -100,6 +111,8 @@ public class GameController {
 
     }
 
+    //Check if there's still any box not on target
+    //if yes, return false; if no, return true
     public boolean finish() {
         int[][] matrix = model.getMatrix();
         for (int i = 0; i < matrix.length; i++) {
@@ -109,10 +122,12 @@ public class GameController {
                 }
             }
         }
-
         return true;
     }
 
+
+    //Check if the box is pushed to a tile where 2 of it's sides are surrounded by walls
+    //Game over
     public boolean gameover() {
         int[][] matrix = model.getMatrix();
         for (int i = 0; i < matrix.length; i++) {
