@@ -13,7 +13,7 @@ import view.game.Hero;
  */
 public class GameController {
     private final GamePanel view;
-    private final MapMatrix model;
+    public final MapMatrix model;
 
     public GameController(GamePanel view, MapMatrix model) {
         this.view = view;

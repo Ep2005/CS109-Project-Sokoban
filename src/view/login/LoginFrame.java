@@ -14,6 +14,7 @@ public class LoginFrame extends JFrame {
     private JTextField password;
     private JButton submitBtn;
     private JButton registerBtn;
+    private JButton guestmodeBtn;
     private LevelFrame levelFrame;
 
 
@@ -27,7 +28,8 @@ public class LoginFrame extends JFrame {
         password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        registerBtn = FrameUtil.createButton(this, "register", new Point(160, 140), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point(160, 140), 100, 40);
+        guestmodeBtn = FrameUtil.createButton(this, "Guestmode", new Point(80, 200), 120, 40);
 
         submitBtn.addActionListener(e -> {
             File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
@@ -56,14 +58,6 @@ public class LoginFrame extends JFrame {
                     JOptionPane.showMessageDialog(null, "User does not exist or wrong Password");
                 }
             }
-//
-            if (this.levelFrame != null) { //if cannot login this no work)
-                this.levelFrame.setVisible(true);
-                this.setVisible(false);
-            }
-
-
-            //todo: check login info
 
         });
 
@@ -99,6 +93,13 @@ public class LoginFrame extends JFrame {
                 System.out.println("error");
             }
 
+        });
+
+        guestmodeBtn.addActionListener(e -> {
+            if (this.levelFrame != null) { //if cannot login this no work)
+                this.levelFrame.setVisible(true);
+                this.setVisible(false);
+            }
         });
 
         this.setLocationRelativeTo(null);
