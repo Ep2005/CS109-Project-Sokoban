@@ -1,21 +1,19 @@
 package view.login;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import view.FrameUtil;
 import view.level.LevelFrame;
-import java.io.IOException;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.File;
 
 
 public class LoginFrame extends JFrame {
     private JTextField username;
     private JTextField password;
     private JButton submitBtn;
-    private JButton regBtn;
+    private JButton registerBtn;
     private LevelFrame levelFrame;
 
 
@@ -29,48 +27,47 @@ public class LoginFrame extends JFrame {
         password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        regBtn = FrameUtil.createButton(this, "register", new Point(160, 140), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "register", new Point(160, 140), 100, 40);
 
         submitBtn.addActionListener(e -> {
             File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
             ArrayList<String> users=new ArrayList<>();
-            ArrayList<String> password=new ArrayList<>();
+            ArrayList<String> passwords=new ArrayList<>();
             Scanner f;
             try{
-                f=new Scanner(file);
+                f = new Scanner(file);
                 while (f.hasNext()){
                     users.add(f.next());
-                    f.next();}
+                    passwords.add(f.next());}
 
             }catch (IOException g){
                 System.out.println("error");
             }
 
-            try{
-                BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
-                String username1=username.getText();
-                if(!users.contains(username1)) {
+            String username1 = username.getText();
 
-
+            if (users.contains(username1)){
+                if (passwords.get(users.indexOf(username1)).equals(password.getText())){
+                    JOptionPane.showMessageDialog(null, "Login Successful");
+                    this.levelFrame.setVisible(true);
+                    this.setVisible(false);
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Username is already in use");
+                else {
+                    JOptionPane.showMessageDialog(null, "User does not exist or wrong Password");
                 }
-                a.flush();
-                a.close();
             }
-            catch (IOException ee){
-                System.out.println("error");
-            }
-
+//
             if (this.levelFrame != null) { //if cannot login this no work)
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
             }
+
+
             //todo: check login info
 
         });
-        regBtn.addActionListener(e -> {
+
+        registerBtn.addActionListener(e -> {
             File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
             ArrayList<String> users=new ArrayList<>();
             Scanner f;
@@ -88,13 +85,11 @@ public class LoginFrame extends JFrame {
                 BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
                 String username1=username.getText();
                 if(!users.contains(username1)) {
-
-
                     String password1 = password.getText();
                     a.write(username1 + " " + password1 + "\n");
+                    JOptionPane.showMessageDialog(null, "Registered Successfully");
                 }
                 else{
-
                     JOptionPane.showMessageDialog(null, "Username is already in use");
                 }
                 a.flush();
@@ -113,4 +108,5 @@ public class LoginFrame extends JFrame {
     public void setLevelFrame(LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
     }
+
 }
