@@ -1,5 +1,7 @@
 package view.login;
-
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import view.FrameUtil;
 import view.level.LevelFrame;
 
@@ -10,8 +12,9 @@ import java.awt.*;
 public class LoginFrame extends JFrame {
     private JTextField username;
     private JTextField password;
-    private JButton submitBtn;
-    private JButton resetBtn;
+    private JButton confirmBtn;
+    private JButton registerBtn;
+    private JButton guestmodeBtn;
     private LevelFrame levelFrame;
 
 
@@ -24,22 +27,83 @@ public class LoginFrame extends JFrame {
         username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
         password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
-        submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        resetBtn = FrameUtil.createButton(this, "Reset", new Point(160, 140), 100, 40);
+        confirmBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point(160, 140), 100, 40);
+        guestmodeBtn = FrameUtil.createButton(this, "Guestmode", new Point(80, 200), 120, 40);
 
-        submitBtn.addActionListener(e -> {
-            System.out.println("Username = " + username.getText());
-            System.out.println("Password = " + password.getText());
-            if (this.levelFrame != null) {
+        confirmBtn.addActionListener(e -> {
+            File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
+            ArrayList<String> users=new ArrayList<>();
+            ArrayList<String> passwords=new ArrayList<>();
+            Scanner f;
+            try{
+                f = new Scanner(file);
+                while (f.hasNext()){
+                    users.add(f.next());
+                    passwords.add(f.next());}
+
+            }catch (IOException g){
+                System.out.println("error");
+            }
+
+            String username1 = username.getText();
+
+            if (users.contains(username1)){
+                if (passwords.get(users.indexOf(username1)).equals(password.getText())){
+                    JOptionPane.showMessageDialog(null, "Login Successful");
+                    this.levelFrame.setVisible(true);
+                    this.setVisible(false);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "User does not exist or wrong Password");
+                }
+            }
+
+            else{
+                JOptionPane.showMessageDialog(null, "Username and password cannot be blank");
+            }
+
+        });
+
+        registerBtn.addActionListener(e -> {
+            File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
+            ArrayList<String> users=new ArrayList<>();
+            Scanner f;
+            try{
+                f=new Scanner(file);
+                while (f.hasNext()){
+                    users.add(f.next());
+                    f.next();}
+
+            }catch (IOException g){
+                System.out.println("error");
+            }
+
+            try{
+                BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
+                String username1=username.getText();
+                if(!users.contains(username1)) {
+                    String password1 = password.getText();
+                    a.write(username1 + " " + password1 + "\n");
+                    JOptionPane.showMessageDialog(null, "Registered Successfully");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Username is already in use");
+                }
+                a.flush();
+                a.close();
+            }
+            catch (IOException ee){
+                System.out.println("error");
+            }
+
+        });
+
+        guestmodeBtn.addActionListener(e -> {
+            if (this.levelFrame != null) { //if cannot login this no work)
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
             }
-            //todo: check login info
-
-        });
-        resetBtn.addActionListener(e -> {
-            username.setText("");
-            password.setText("");
         });
 
         this.setLocationRelativeTo(null);
@@ -49,4 +113,5 @@ public class LoginFrame extends JFrame {
     public void setLevelFrame(LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
     }
+
 }
