@@ -34,6 +34,8 @@ public class GameController {
         System.out.println("Do restart game here");
         this.model.resetMapMatrix();
         this.view.restartGame();
+        view.steps = 0;
+        view.stepLabel.setText(String.format("Step: %d", view.steps));
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -67,7 +69,14 @@ public class GameController {
             }
             else if (gameover()) {
                 System.out.println("you lose");
-                JOptionPane.showMessageDialog(view, "you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
 
             return true;
@@ -93,12 +102,17 @@ public class GameController {
                 JOptionPane.showMessageDialog(view, "you win, next level");
                 gameFrame.dispose();
                 LevelFrame.getFrameController().returnLevelFrame(levelFrame);
-
-
             }
             else if (gameover()) {
                 System.out.println("you lose");
-                JOptionPane.showMessageDialog(view, "you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
             return true;
         }
@@ -125,10 +139,18 @@ public class GameController {
             }
             else if (gameover()) {
                 System.out.println("you lose");
-                JOptionPane.showMessageDialog(view, "you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
             return true;
         }
+
         return false;
 
     }
