@@ -17,8 +17,8 @@ public class GamePanel extends ListenerPanel {
     private GridComponent[][] grids;
     private MapMatrix model;
     private GameController controller;
-    private JLabel stepLabel;
-    private int steps;
+    public JLabel stepLabel;
+    public int steps;
     private final int GRID_SIZE = 50;
 
     private Hero hero;

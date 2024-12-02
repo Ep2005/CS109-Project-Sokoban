@@ -2,10 +2,12 @@ package controller;
 
 import model.Direction;
 import model.MapMatrix;
+import view.game.*;
 import view.game.Box;
-import view.game.GamePanel;
-import view.game.GridComponent;
-import view.game.Hero;
+import view.level.LevelFrame;
+import view.login.LoginFrame;
+
+import javax.swing.*;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -14,11 +16,16 @@ import view.game.Hero;
 public class GameController {
     private final GamePanel view;
     public final MapMatrix model;
+    private LevelFrame levelFrame;
+    private GameFrame gameFrame;
 
-    public GameController(GamePanel view, MapMatrix model) {
+
+    public GameController(GamePanel view, MapMatrix model, GameFrame gameFrame) {
         this.view = view;
         this.model = model;
         view.setController(this);
+        this.levelFrame = LevelFrame.getFrameController().getLevelFrame();
+        this.gameFrame = gameFrame;
     }
 
 
@@ -27,6 +34,8 @@ public class GameController {
         System.out.println("Do restart game here");
         this.model.resetMapMatrix();
         this.view.restartGame();
+        view.steps = 0;
+        view.stepLabel.setText(String.format("Step: %d", view.steps));
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -39,7 +48,6 @@ public class GameController {
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
         int[][] map = model.getMatrix();
 
-
         //Move hero is the tile in front is en empty tile or a target tile
         if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
             //update hero in MapMatrix
@@ -51,11 +59,24 @@ public class GameController {
             //Update the row and column attribute in hero
             h.setRow(tRow);
             h.setCol(tCol);
+
             if (finish()) {
                 System.out.println("you win, next level");
+                JOptionPane.showMessageDialog(view, "you win, next level");
+                gameFrame.dispose();
+                LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+
             }
             else if (gameover()) {
                 System.out.println("you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
 
             return true;
@@ -78,9 +99,20 @@ public class GameController {
             h.setCol(tCol);
             if (finish()) {
                 System.out.println("you win, next level");
+                JOptionPane.showMessageDialog(view, "you win, next level");
+                gameFrame.dispose();
+                LevelFrame.getFrameController().returnLevelFrame(levelFrame);
             }
             else if (gameover()) {
                 System.out.println("you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
             return true;
         }
@@ -101,12 +133,24 @@ public class GameController {
             h.setCol(tCol);
             if (finish()) {
                 System.out.println("you win, next level");
+                JOptionPane.showMessageDialog(view, "you win, next level");
+                gameFrame.dispose();
+                LevelFrame.getFrameController().returnLevelFrame(levelFrame);
             }
             else if (gameover()) {
                 System.out.println("you lose");
+                if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
+                    restartGame();
+                    return false;
+                }
+                else {
+                    gameFrame.dispose();
+                    LevelFrame.getFrameController().returnLevelFrame(levelFrame);
+                }
             }
             return true;
         }
+
         return false;
 
     }
@@ -132,7 +176,7 @@ public class GameController {
         int[][] matrix = model.getMatrix();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                if (matrix[i][j] == 10 && (matrix[i-1][j]==1 && matrix[i][j-1]==1 ||matrix[i-1][j]==1 && matrix[i][j+1]==1||matrix[i+1][j]==1 && matrix[i][j-1]==1 ||matrix[i+1][j]==1 && matrix[i][j+1]==1)){
+                if (matrix[i][j] == 10 && (matrix[i - 1][j] == 1 && matrix[i][j - 1] == 1 || matrix[i - 1][j] == 1 && matrix[i][j + 1] == 1 || matrix[i + 1][j] == 1 && matrix[i][j - 1] == 1 || matrix[i + 1][j] == 1 && matrix[i][j + 1] == 1)) {
                     return true;
                 }
             }

@@ -12,7 +12,7 @@ import java.awt.*;
 public class LoginFrame extends JFrame {
     private JTextField username;
     private JTextField password;
-    private JButton submitBtn;
+    private JButton confirmBtn;
     private JButton registerBtn;
     private JButton guestmodeBtn;
     private LevelFrame levelFrame;
@@ -27,11 +27,11 @@ public class LoginFrame extends JFrame {
         username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
         password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
-        submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
+        confirmBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
         registerBtn = FrameUtil.createButton(this, "Register", new Point(160, 140), 100, 40);
         guestmodeBtn = FrameUtil.createButton(this, "Guestmode", new Point(80, 200), 120, 40);
 
-        submitBtn.addActionListener(e -> {
+        confirmBtn.addActionListener(e -> {
             File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");
             ArrayList<String> users=new ArrayList<>();
             ArrayList<String> passwords=new ArrayList<>();
@@ -57,6 +57,10 @@ public class LoginFrame extends JFrame {
                 else {
                     JOptionPane.showMessageDialog(null, "User does not exist or wrong Password");
                 }
+            }
+
+            else{
+                JOptionPane.showMessageDialog(null, "Username and password cannot be blank");
             }
 
         });

@@ -1,11 +1,13 @@
 package controller;
 
+import view.game.GameFrame;
 import view.level.LevelFrame;
 
 import javax.swing.*;
 
 public class FrameController {
     private LevelFrame levelFrame;
+    private GameFrame gameFrame;
 
     public LevelFrame getLevelFrame() {
         return levelFrame;
@@ -19,4 +21,5 @@ public class FrameController {
         frame.dispose();
         levelFrame.setVisible(true);
     }
+
 }
