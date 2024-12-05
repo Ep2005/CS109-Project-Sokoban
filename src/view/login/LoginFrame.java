@@ -17,7 +17,6 @@ public class LoginFrame extends JFrame {
     private JButton guestmodeBtn;
     private LevelFrame levelFrame;
 
-
     public LoginFrame(int width, int height) {
         this.setTitle("Login Frame");
         this.setLayout(null);
@@ -113,5 +112,7 @@ public class LoginFrame extends JFrame {
     public void setLevelFrame(LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
     }
+
+
 
 }
