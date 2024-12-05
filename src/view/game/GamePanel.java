@@ -32,8 +32,9 @@ public class GamePanel extends ListenerPanel {
         this.model = model;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         initialGame();
-
     }
+
+
 
     public void initialGame() {
         this.steps = 0;
@@ -45,10 +46,10 @@ public class GamePanel extends ListenerPanel {
                 //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {
                     case 1:
-                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10));
+                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10, "src/view/game/images/box.png"));
                         break;
                     case 2:
-                        this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j);
+                        this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j, "src/view/game/images/mario(2).png");
                         grids[i][j].setHeroInGrid(hero);
                         break;
                 }
@@ -125,10 +126,10 @@ public class GamePanel extends ListenerPanel {
 
                 switch (model.getId(i, j) / 10) {
                     case 1:
-                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10));
+                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10, "src/view/game/images/box.png"));
                         break;
                     case 2:
-                        this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j);
+                        this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j, "src/view/game/images/mario(2).png");
                         grids[i][j].setHeroInGrid(hero);
                         break;
                 }
@@ -138,4 +139,5 @@ public class GamePanel extends ListenerPanel {
         this.steps = 0;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
     }
+
 }

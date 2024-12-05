@@ -13,31 +13,63 @@ public class GridComponent extends JComponent {
     private Box box;
     static Color color = new Color(246, 246, 229);
 
+    private Image grassImage;
+    private Image wallImage;
+
     public GridComponent(int row, int col, int id, int gridSize) {
         this.setSize(gridSize, gridSize);
         this.row = row;
         this.col = col;
         this.id = id;
+
+        grassImage = new ImageIcon("src/view/game/images/grassTile.png").getImage();
+        wallImage = new ImageIcon("src/view/game/images/wall.jpg").getImage();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.printComponents(g);
-        Color borderColor = color;
+        Color borderColor = null;
         switch (id % 10) {
             case 1:
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRect(0, 0, getWidth(), getHeight());
-                borderColor = Color.DARK_GRAY;
+//                g.setColor(Color.LIGHT_GRAY);
+//                g.fillRect(0, 0, getWidth(), getHeight());
+//                borderColor = Color.DARK_GRAY;
+//                break;
+                if (wallImage != null) {
+                    // Draw the image
+                    g.drawImage(wallImage, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    // If the image is null, draw a placeholder rectangle
+                    g.setColor(Color.RED);
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                }
                 break;
             case 0:
-                g.setColor(Color.WHITE);
-                g.fillRect(0, 0, getWidth(), getHeight());
+//                g.setColor(Color.WHITE);
+//                g.fillRect(0, 0, getWidth(), getHeight());
+//                break;
+                if (grassImage != null) {
+                    // Draw the image
+                    g.drawImage(grassImage, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    // If the image is null, draw a placeholder rectangle
+                    g.setColor(Color.RED);
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                }
                 break;
             case 2:
-                g.setColor(Color.WHITE);
-                g.fillRect(0, 0, getWidth(), getHeight());
+//                g.setColor(Color.WHITE);
+//                g.fillRect(0, 0, getWidth(), getHeight());
                 g.setColor(Color.GREEN);
+                if (grassImage != null) {
+                    // Draw the image
+                    g.drawImage(grassImage, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    // If the image is null, draw a placeholder rectangle
+                    g.setColor(Color.RED);
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                }
                 int[] xPoints = {getWidth() / 2, getWidth(), getWidth() / 2, 0};
                 int[] yPoints = {0, getHeight() / 2, getHeight(), getHeight() / 2};
                 g.fillPolygon(xPoints, yPoints, 4);
@@ -45,7 +77,7 @@ public class GridComponent extends JComponent {
                 g.drawPolygon(xPoints, yPoints, 4);
                 break;
         }
-        Border border = BorderFactory.createLineBorder(borderColor, 1);
+        Border border = BorderFactory.createLineBorder(borderColor, 0);
         this.setBorder(border);
     }
 

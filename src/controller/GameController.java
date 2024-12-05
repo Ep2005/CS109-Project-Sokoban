@@ -66,14 +66,12 @@ public class GameController {
                 gameFrame.dispose();
                 LevelFrame.getFrameController().returnLevelFrame(levelFrame);
 
-            }
-            else if (gameover()) {
+            } else if (gameover()) {
                 System.out.println("you lose");
                 if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
                     restartGame();
                     return false;
-                }
-                else {
+                } else {
                     gameFrame.dispose();
                     LevelFrame.getFrameController().returnLevelFrame(levelFrame);
                 }
@@ -102,14 +100,12 @@ public class GameController {
                 JOptionPane.showMessageDialog(view, "you win, next level");
                 gameFrame.dispose();
                 LevelFrame.getFrameController().returnLevelFrame(levelFrame);
-            }
-            else if (gameover()) {
+            } else if (gameover()) {
                 System.out.println("you lose");
                 if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
                     restartGame();
                     return false;
-                }
-                else {
+                } else {
                     gameFrame.dispose();
                     LevelFrame.getFrameController().returnLevelFrame(levelFrame);
                 }
@@ -136,14 +132,12 @@ public class GameController {
                 JOptionPane.showMessageDialog(view, "you win, next level");
                 gameFrame.dispose();
                 LevelFrame.getFrameController().returnLevelFrame(levelFrame);
-            }
-            else if (gameover()) {
+            } else if (gameover()) {
                 System.out.println("you lose");
                 if (JOptionPane.showConfirmDialog(view, "you lose, restart?") == JOptionPane.YES_OPTION) {
                     restartGame();
                     return false;
-                }
-                else {
+                } else {
                     gameFrame.dispose();
                     LevelFrame.getFrameController().returnLevelFrame(levelFrame);
                 }
@@ -167,6 +161,7 @@ public class GameController {
             }
         }
         return true;
+
     }
 
 
@@ -184,7 +179,6 @@ public class GameController {
         return false;
     }
 }
-
 
 
     //todo: add other methods such as loadGame, saveGame...
