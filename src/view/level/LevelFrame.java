@@ -12,10 +12,27 @@ public class LevelFrame extends JFrame {
 
     private static FrameController frameController = new FrameController();
 
+    private Image backgroundImg;
+
     public LevelFrame(int width, int height) {
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(width, height);
+
+        backgroundImg = new ImageIcon("src/view/sokobanBg.png").getImage();
+
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        backgroundPanel.setLayout(null); // Use absolute layout
+        this.setContentPane(backgroundPanel);
+
+
+
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(30, height / 2 - 50), 80, 60);
         JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(120, height / 2 - 50), 80, 60);
         JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(210, height / 2 - 50), 80, 60);

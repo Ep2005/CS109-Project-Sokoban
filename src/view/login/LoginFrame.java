@@ -16,19 +16,35 @@ public class LoginFrame extends JFrame {
     private JButton registerBtn;
     private JButton guestmodeBtn;
     private LevelFrame levelFrame;
+    private Image backgroundImg;
+
 
     public LoginFrame(int width, int height) {
         this.setTitle("Login Frame");
         this.setLayout(null);
         this.setSize(width, height);
-        JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "username:");
-        JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "password:");
-        username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
-        password = FrameUtil.createJTextField(this, new Point(120, 80), 120, 40);
 
-        confirmBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
-        registerBtn = FrameUtil.createButton(this, "Register", new Point(160, 140), 100, 40);
-        guestmodeBtn = FrameUtil.createButton(this, "Guestmode", new Point(80, 200), 120, 40);
+        backgroundImg = new ImageIcon("src/view/sokobanBg.png").getImage();
+
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImg, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        backgroundPanel.setLayout(null); // Use absolute layout
+        this.setContentPane(backgroundPanel);
+
+
+        JLabel userLabel = FrameUtil.createJLabel(this, new Point(200, 160), 70, 40, "username:");
+        JLabel passLabel = FrameUtil.createJLabel(this, new Point(200, 210), 70, 40, "password:");
+        username = FrameUtil.createJTextField(this, new Point(270, 160), 120, 40);
+        password = FrameUtil.createJTextField(this, new Point(270, 210), 120, 40);
+
+        confirmBtn = FrameUtil.createButton(this, "Confirm", new Point(210, 260), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point(340, 260), 100, 40);
+        guestmodeBtn = FrameUtil.createButton(this, "Guestmode", new Point(260, 310), 120, 40);
 
         confirmBtn.addActionListener(e -> {
             File file=new File("C:\\Users\\Ernest Phang\\IdeaProjects\\Phang Ern Young - Sokoban\\Account.txt");

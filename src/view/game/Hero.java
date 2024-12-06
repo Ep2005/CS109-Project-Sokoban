@@ -104,5 +104,7 @@ public class Hero extends JComponent {
     public void setCol(int col) {
         this.col = col;
     }
+
+
 }
 
