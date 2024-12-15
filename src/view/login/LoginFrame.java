@@ -97,13 +97,15 @@ public class LoginFrame extends JFrame {
             try{
                 BufferedWriter a=new BufferedWriter(new FileWriter("Account.txt",true));
                 String username1=username.getText();
-                if(!users.contains(username1)) {
+                if(!users.contains(username1) && !username1.isEmpty()) {
                     String password1 = password.getText();
                     a.write(username1 + " " + password1 + "\n");
                     JOptionPane.showMessageDialog(null, "Registered Successfully");
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Username is already in use");
+
+                } else if (username1.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Username and password cannot be blank");
+                } else{
+                    JOptionPane.showMessageDialog(null, "Username is empty or is already in use");
                 }
                 a.flush();
                 a.close();
@@ -115,7 +117,7 @@ public class LoginFrame extends JFrame {
         });
 
         guestmodeBtn.addActionListener(e -> {
-            if (this.levelFrame != null) { //if cannot login this no work)
+            if (this.levelFrame != null) {
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
             }

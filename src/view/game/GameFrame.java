@@ -2,10 +2,9 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -32,8 +31,11 @@ public class GameFrame extends JFrame {
 
     private JLabel stepLabel;
     private JLabel controlsLabel;
+    private JLabel timeLabel;
     private GamePanel gamePanel;
 
+    private Timer timer;
+    private int elapsedTime;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix) {
         this.setTitle("Sokoban");
@@ -44,7 +46,6 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix, this);
 
-
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 280, 120), 80, 50);
         this.returnBtn = FrameUtil.createButton(this, "Return", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
@@ -52,13 +53,27 @@ public class GameFrame extends JFrame {
         this.downBtn = FrameUtil.createButton(this, "down", new Point(gamePanel.getWidth() + 180,300),80,50);
         this.rightBtn = FrameUtil.createButton(this,"right",new Point(gamePanel.getWidth() + 260,275),80,50);
         this.leftBtn = FrameUtil.createButton(this, "left",new Point(gamePanel.getWidth() + 100, 275),80,50);
+
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 190, 70), 180, 50);
         this.controlsLabel = FrameUtil.createJLabel(this, "Controls", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 180, 200), 180, 50);
         gamePanel.setStepLabel(stepLabel);
+        this.timeLabel = FrameUtil.createJLabel(this,"00:00:00", new Font("serif", Font.ITALIC,22), new Point(gamePanel.getWidth() + 180, 40), 180, 50);
+
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                elapsedTime += 1000;
+                updateTimeLabel();
+            }
+        });
+        timer.start();
 
         this.restartBtn.addActionListener(e -> {
+            timer.stop();
+            elapsedTime = 0;
+            updateTimeLabel();
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
+            timer.start();
         });
 
         this.loadBtn.addActionListener(e -> {
@@ -100,6 +115,14 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private void updateTimeLabel() {
+        int hours = elapsedTime / 3600000;
+        int minutes = (elapsedTime % 3600000) / 60000;
+        int seconds = (elapsedTime % 60000) / 1000;
+        String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        timeLabel.setText(time);
     }
 
 }

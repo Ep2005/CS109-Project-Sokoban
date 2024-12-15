@@ -13,7 +13,7 @@ public class GridComponent extends JComponent {
     private Box box;
     static Color color = new Color(246, 246, 229);
 
-    private Image grassImage;
+    private Image emptyTileImage;
     private Image wallImage;
 
     public GridComponent(int row, int col, int id, int gridSize) {
@@ -22,8 +22,8 @@ public class GridComponent extends JComponent {
         this.col = col;
         this.id = id;
 
-        grassImage = new ImageIcon("src/view/game/images/grassTile.png").getImage();
-        wallImage = new ImageIcon("src/view/game/images/wall.jpg").getImage();
+        emptyTileImage = new ImageIcon("src/view/game/images/emptyTile.png").getImage();
+        wallImage = new ImageIcon("src/view/game/images/wall.png").getImage();
     }
 
     @Override
@@ -49,9 +49,9 @@ public class GridComponent extends JComponent {
 //                g.setColor(Color.WHITE);
 //                g.fillRect(0, 0, getWidth(), getHeight());
 //                break;
-                if (grassImage != null) {
+                if (emptyTileImage != null) {
                     // Draw the image
-                    g.drawImage(grassImage, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(emptyTileImage, 0, 0, getWidth(), getHeight(), this);
                 } else {
                     // If the image is null, draw a placeholder rectangle
                     g.setColor(Color.RED);
@@ -62,9 +62,9 @@ public class GridComponent extends JComponent {
 //                g.setColor(Color.WHITE);
 //                g.fillRect(0, 0, getWidth(), getHeight());
                 g.setColor(Color.GREEN);
-                if (grassImage != null) {
+                if (emptyTileImage != null) {
                     // Draw the image
-                    g.drawImage(grassImage, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(emptyTileImage, 0, 0, getWidth(), getHeight(), this);
                 } else {
                     // If the image is null, draw a placeholder rectangle
                     g.setColor(Color.RED);

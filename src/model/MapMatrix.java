@@ -57,4 +57,8 @@ public class MapMatrix {
     public int[][] getMatrix() {
         return matrix;
     }
+
+    public MapMatrix setVisible(boolean b) {
+        return null;
+    }
 }
