@@ -11,6 +11,7 @@ import java.awt.*;
 public class LevelFrame extends JFrame {
 
     private static FrameController frameController = new FrameController();
+    public static String CURRENTUSER;
 
     private Image backgroundImg;
 
@@ -193,4 +194,11 @@ public class LevelFrame extends JFrame {
         return frameController;
     }
 
+    public static String getCURRENTUSER() {
+        return CURRENTUSER;
+    }
+
+    public static void setCURRENTUSER(String CURRENTUSER) {
+        LevelFrame.CURRENTUSER = CURRENTUSER;
+    }
 }

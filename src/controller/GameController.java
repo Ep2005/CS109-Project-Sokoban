@@ -8,6 +8,11 @@ import view.level.LevelFrame;
 import view.login.LoginFrame;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
+import static view.level.LevelFrame.CURRENTUSER;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -178,6 +183,31 @@ public class GameController {
         }
         return false;
     }
+
+    public void saveGame(String path) {
+        int[][] matrix = model.getMatrix();
+        int steps = view.getSteps();
+        File file = new File("./src/savings/"+CURRENTUSER);
+
+        if(!file.exists()){
+            file.mkdir();
+        }
+        try{
+            BufferedWriter w = new BufferedWriter(new FileWriter("./src/savings/"+CURRENTUSER+"/level.txt"));
+            for (int i=0 ;i<matrix.length;i++){
+                for(int j=0;j<matrix[i].length;j++){
+                    w.write(matrix[i][j]+" ");
+                }
+                w.newLine();
+            }
+            w.write(String.valueOf(steps));
+            w.flush();
+            w.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 

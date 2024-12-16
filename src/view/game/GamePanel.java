@@ -110,6 +110,10 @@ public class GamePanel extends ListenerPanel {
         this.steps = steps;
     }
 
+    public JLabel getStepLabel() {
+        return stepLabel;
+    }
+
     public void setController(GameController controller) {
         this.controller = controller;
     }
