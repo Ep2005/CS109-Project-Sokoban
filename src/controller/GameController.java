@@ -187,6 +187,7 @@ public class GameController {
     public void saveGame(String path) {
         int[][] matrix = model.getMatrix();
         int steps = view.getSteps();
+        int time = gameFrame.getElapsedTime();
         File file = new File("./src/savings/"+CURRENTUSER);
 
         if(!file.exists()){
@@ -201,6 +202,8 @@ public class GameController {
                 w.newLine();
             }
             w.write(String.valueOf(steps));
+            w.newLine();
+            w.write(String.valueOf(time));
             w.flush();
             w.close();
         } catch (Exception e) {

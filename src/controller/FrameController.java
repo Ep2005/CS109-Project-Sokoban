@@ -29,15 +29,16 @@ public class FrameController {
     public void loadGame(String path ,JFrame frame){
         System.out.println(path);
         List<String> lines = FileUtil.readFileToList(path);
-        int[][] map = new int[lines.size()-1][];
-        for (int i=0; i< lines.size()-1; i++){
+        int[][] map = new int[lines.size()-2][];
+        for (int i=0; i< lines.size()-2; i++){
             String[] elements = lines.get(i).split(" ");
             map[i] = new int[elements.length];
             for (int j=0; j<elements.length; j++){
                 map[i][j] = Integer.parseInt(elements[j]);
             }
         }
-        int steps = Integer.parseInt(lines.get(lines.size()-1));
+        int steps = Integer.parseInt(lines.get(lines.size()-2));
+        int time = Integer.parseInt(lines.get(lines.size()-1));
 
         frame.dispose();
         MapMatrix mapMatrix = new MapMatrix(map);
@@ -45,6 +46,7 @@ public class FrameController {
         GamePanel gamePanel = gameFrame.getGamePanel();
         gamePanel.setSteps(steps);
         gamePanel.getStepLabel().setText(String.format("Step: %d", steps));
+        gameFrame.setElapsedTime(time);
         gameFrame.setVisible(true);
     }
 

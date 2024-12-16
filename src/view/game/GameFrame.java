@@ -76,12 +76,6 @@ public class GameFrame extends JFrame {
             timer.start();
         });
 
-        this.loadBtn.addActionListener(e -> {
-            String path = JOptionPane.showInputDialog(this, "Input path:");
-            LevelFrame.getFrameController().loadGame(path,this);
-            gamePanel.requestFocusInWindow();//enable key listener
-        });
-
         this.returnBtn.addActionListener(e -> {
             LevelFrame.getFrameController().returnLevelFrame(this);
             gamePanel.requestFocusInWindow();//enable key listener
@@ -113,10 +107,18 @@ public class GameFrame extends JFrame {
         });
 
         this.saveBtn.addActionListener(e ->{
+            timer.stop();
             String path = JOptionPane.showInputDialog(this, "Save path:");
             controller.saveGame(path);
             gamePanel.requestFocusInWindow();
 
+        });
+
+        this.loadBtn.addActionListener(e -> {
+            String path = JOptionPane.showInputDialog(this, "Input path:");
+            LevelFrame.getFrameController().loadGame(path,this);
+            timer.start();
+            gamePanel.requestFocusInWindow();//enable key listener
         });
 
         //todo: add other button here
@@ -148,4 +150,11 @@ public class GameFrame extends JFrame {
         timeLabel.setText(time);
     }
 
+    public int getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(int elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
 }
